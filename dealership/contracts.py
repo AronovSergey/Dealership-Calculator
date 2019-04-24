@@ -32,12 +32,10 @@ class BuyContract(Contract):
         multiplier = VEHICLE_MULTIPLIERS[self.vehicle.__class__]
 
         sale_price =  self.vehicle.sale_price()
-        price = sale_price + (multiplier * self.monthly_payments * sale_price / 100)
-        return price
+        return sale_price + (multiplier * self.monthly_payments * sale_price / 100)
 
     def _monthly_attribute(self):
         return self.monthly_payments
-        
 
 
 
@@ -55,9 +53,7 @@ class LeaseContract(Contract):
         multiplier = VEHICLE_MULTIPLIERS[self.vehicle.__class__]
 
         sale_price = self.vehicle.sale_price()
-        lease_multiplier = sale_price * multiplier/self.length_in_months
-        price = sale_price + lease_multiplier
-        return price
+        return sale_price + (sale_price * multiplier / self.length_in_months)
 
     def _monthly_attribute(self):
         return self.length_in_months
