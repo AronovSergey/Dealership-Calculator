@@ -14,17 +14,18 @@ class BuyContract(Contract):
         self.monthly_payments = monthly_payments
     
     def total_value(self):
-        I = 0
-        if isinstance (self.vehicle, Car):
-            I = 1.07
-        elif isinstance (self.vehicle, Motorcycle):
-            I = 1.03
-        elif isinstance (self.vehicle, Truck):
-            I = 1.11
-        tv = self.vehicle.sale_price() + (I * self.monthly_payments * self.vehicle.sale_price() / 100)
+
+        VEHICLE_MULTIPLIERS = {
+            Car: 1.07,
+            Motorcycle: 1.03,
+            Truck: 1.11
+        }
+        multiplier = VEHICLE_MULTIPLIERS[self.vehicle.__class__]
+
+        price = self.vehicle.sale_price() + (multiplier * self.monthly_payments * self.vehicle.sale_price() / 100)
         if isinstance (self.customer, Employee):
-            return tv - (tv * .1)
-        return tv
+            return price - (price * .1)
+        return price
         
         
     def monthly_value(self):
@@ -38,17 +39,19 @@ class LeaseContract(Contract):
         self.length_in_months = length_in_months
     
     def total_value(self):
-        lease_multiplier = 0
-        if isinstance(self.vehicle, Car):
-            lease_multiplier = self.vehicle.sale_price() * 1.2/self.length_in_months
-        elif isinstance(self.vehicle, Motorcycle):
-            lease_multiplier = self.vehicle.sale_price() * 1/self.length_in_months
-        elif isinstance(self.vehicle, Truck):
-            lease_multiplier = self.vehicle.sale_price() * 1.7/self.length_in_months
-        tv = self.vehicle.sale_price() + lease_multiplier
+        VEHICLE_MULTIPLIERS = {
+            Car: 1.2,
+            Motorcycle: 1,
+            Truck: 1.7
+        }
+        multiplier = VEHICLE_MULTIPLIERS[self.vehicle.__class__]
+
+        lease_multiplier = self.vehicle.sale_price() * multiplier/self.length_in_months
+        price = self.vehicle.sale_price() + lease_multiplier
+
         if isinstance (self.customer, Employee):
-            return tv - (tv * .1)
-        return tv
+            return price - (price * .1)
+        return price
 
     def monthly_value(self):
         return self.total_value() / self.length_in_months 
