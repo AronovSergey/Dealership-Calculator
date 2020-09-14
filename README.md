@@ -1,7 +1,6 @@
 # Dealership calculator
 
-Today we'll be building a system that will assist a vehicle dealership to calculate prices when a user wants to buy/lease a car. A dealership can also buy vehicles from customers.
-
+>A system that will assist a vehicle dealership to calculate prices when a user wants to buy/lease a car. A dealership can also buy vehicles from customers.
 There are three types of vehicles in the dealership: `Car`, `Truck` and `Motorcycle`. All these vehicles have the same attributes: `maker`, `model`, `year`, `base_price` (**important**, it'll be used to compute sale and purchase final prices), `miles` (see tests for more details).
 
 ### Customers
